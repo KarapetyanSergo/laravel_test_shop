@@ -18,15 +18,16 @@ Route::controller(AuthController::class)->group(function () {
     Route::middleware('auth:api')->post('logout', 'logout');
 });
 
-Route::prefix('categories')
-    ->controller(CategoryController::class)
-    ->middleware('auth:api')
-    ->group(function () {
-        Route::get('/', 'index');
-        Route::get('/{category}', 'show');
-        Route::post('/', 'store');
-        Route::delete('/{category}', 'destroy');
-    });
+Route::group(['middleware' => ['auth:api', 'can:check-admin,'.CategoryController::class]], function () {
+    Route::prefix('categories')
+        ->controller(CategoryController::class)
+        ->group(function () {
+            Route::get('/', 'index');
+            Route::get('/{category}', 'show');
+            Route::post('/', 'store');
+            Route::delete('/{category}', 'destroy');
+        });
+});
 
 Route::prefix('brands')
     ->controller(BrandController::class)
@@ -44,18 +45,19 @@ Route::prefix('products')
         Route::get('/',  'index');
         Route::get('/{product}', 'show');
 
-        Route::middleware('auth:api')->group(function () {
-            Route::post('/', 'store');
-            Route::put('/{product}', 'update');
-            Route::delete('/{product}', 'destroy');
-        });
+        Route::group(['middleware' => ['auth:api', 'can:check-merchant,'.ProductController::class]], function () {
+                Route::post('/', 'store');
+                Route::delete('/{product}', 'destroy');
+            });
     });
 
-Route::prefix('baskets')
-    ->controller(BasketController::class)
-    ->middleware('auth:api')
-    ->group(function () {
-        Route::get('/', 'index');
-        Route::post('/', 'store');
-        Route::delete('/{basket}', 'destroy');
-    });
+Route::group(['middleware' => ['auth:api', 'can:check-customer,'.BasketController::class]], function () {
+    Route::prefix('baskets')
+        ->controller(BasketController::class)
+        ->group(function () {
+            Route::get('/', 'index');
+            Route::post('/', 'store');
+            Route::delete('/{basket}', 'destroy');
+        });
+});
+

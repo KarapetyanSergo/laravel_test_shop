@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Product;
 
+use App\Rules\CategoryRule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class ProductStoreRequest extends FormRequest
@@ -12,7 +13,11 @@ class ProductStoreRequest extends FormRequest
             'size' => 'required|string|max:255',
             'color' => 'required|string|max:255',
             'price' =>  'required|integer',
-            'category_id' => 'required|integer|exists:categories,id'
+            'category_id' => [
+                'required',
+                'integer',
+                new CategoryRule()
+            ]
         ];
     }
 }

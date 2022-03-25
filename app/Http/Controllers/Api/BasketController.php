@@ -8,13 +8,13 @@ use App\Http\Resources\BasketResource;
 use App\Models\Basket;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Facades\Auth;
 
 class BasketController extends Controller
 {
-    public function index(): Collection
+    public function index(User $user): Collection
     {
-        $user = User::find(1);
-        return $user->baskets;
+        return Auth::user()->baskets;
     }
 
     public function store(BasketStoreRequest $request): BasketResource

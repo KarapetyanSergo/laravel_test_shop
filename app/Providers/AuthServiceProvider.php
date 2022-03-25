@@ -2,9 +2,12 @@
 
 namespace App\Providers;
 
-use App\Models\Basket;
-use App\Models\Product;
-use App\Models\User;
+use App\Http\Controllers\Api\BasketController;
+use App\Http\Controllers\Api\CategoryController;
+use App\Http\Controllers\Api\ProductController;
+use App\Policies\BasketPolicy;
+use App\Policies\CategoryPolicy;
+use App\Policies\ProductPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
 use Laravel\Passport\Passport;
@@ -17,7 +20,9 @@ class AuthServiceProvider extends ServiceProvider
      * @var array<class-string, class-string>
      */
     protected $policies = [
-        // 'App\Models\Model' => 'App\Policies\ModelPolicy',
+        BasketController::class => BasketPolicy::class,
+        ProductController::class => ProductPolicy::class,
+        CategoryController::class => CategoryPolicy::class,
     ];
 
     /**
@@ -29,7 +34,7 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        if (! $this->app->routesAreCached()) {
+        if (!$this->app->routesAreCached()) {
             Passport::routes();
         }
 
