@@ -3,20 +3,18 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Middleware\CategoryMiddleware;
-use App\Http\Requests\asd;
-use App\Http\Requests\Category\CategoryGetRequest;
 use App\Http\Requests\Category\CategoryStoreRequest;
 use App\Models\Category;
+use Ramsey\Collection\Collection;
 
 class CategoryController extends Controller
 {
-    public function index()
+    public function index(): Collection
     {
         return Category::whereDoesntHave('children')->get();
     }
 
-    public function show(Category $category)
+    public function show(Category $category): Category
     {
         return $category;
     }

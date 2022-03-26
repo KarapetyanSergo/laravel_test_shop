@@ -11,7 +11,7 @@ class BrandStoreRequest extends FormRequest
     {
         return [
             'name' => 'required|string',
-            'country' => 'required|string'
+            'country' => 'required|string',
         ];
     }
 }

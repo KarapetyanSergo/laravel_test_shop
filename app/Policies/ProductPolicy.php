@@ -10,12 +10,20 @@ class ProductPolicy
 {
     use HandlesAuthorization;
 
-    public function checkMerchant(User $user): bool
+    public function create(User $user): bool
     {
-        if ($user->type == 'merchant') {
+        if ($user->type == 'merchant'  || $user->type == 'admin') {
             return true;
         }
 
+        return false;
+    }
+
+    public function delete(User $user): bool
+    {
+        if ($user->type == 'merchant'  || $user->type == 'admin') {
+            return true;
+        }
 
         return false;
     }

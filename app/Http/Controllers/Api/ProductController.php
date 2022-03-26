@@ -7,17 +7,17 @@ use App\Http\Requests\Product\ProductStoreRequest;
 use App\Http\Resources\CategoryRecource;
 use App\Http\Resources\ProductRecource;
 use App\Models\Product;
+use Illuminate\Database\Eloquent\Collection;
 
 class ProductController extends Controller
 {
-    public function index()
+    public function index(): Collection
     {
         return Product::all();
     }
 
     public function store(ProductStoreRequest $request): ProductRecource
     {
-        var_dump('asd');
         $createProduct = Product::create($request->validated());
 
         return new ProductRecource($createProduct);

@@ -18,16 +18,18 @@ Route::controller(AuthController::class)->group(function () {
     Route::middleware('auth:api')->post('logout', 'logout');
 });
 
-Route::group(['middleware' => ['auth:api', 'can:check-admin,'.CategoryController::class]], function () {
-    Route::prefix('categories')
-        ->controller(CategoryController::class)
-        ->group(function () {
-            Route::get('/', 'index');
-            Route::get('/{category}', 'show');
-            Route::post('/', 'store');
-            Route::delete('/{category}', 'destroy');
-        });
-});
+
+Route::prefix('categories')
+    ->controller(CategoryController::class)
+    ->group(function () {
+        Route::get('/', 'index');
+        Route::get('/{category}', 'show');
+        Route::post('/', 'store')
+            ->middleware('can:create,'.CategoryController::class);
+        Route::delete('/{category}', 'destroy')
+            ->middleware('can:delete,'.CategoryController::class);;
+    });
+
 
 Route::prefix('brands')
     ->controller(BrandController::class)
@@ -35,8 +37,12 @@ Route::prefix('brands')
     ->group(function () {
         Route::get('/', 'index');
         Route::get('/{brand}', 'show');
-        Route::post('/', 'store');
-        Route::delete('/{brand}', 'destroy');
+        Route::post('/', 'store')
+            ->middleware('can:create,'.BrandController::class);
+        Route::delete('/{brand}', 'destroy')
+            ->middleware('can:delete'.BrandController::class);
+        Route::put('status/{brand}', 'updateStatus')
+            ->middleware('can:update-status,'.BrandController::class);
     });
 
 Route::prefix('products')
@@ -45,19 +51,23 @@ Route::prefix('products')
         Route::get('/',  'index');
         Route::get('/{product}', 'show');
 
-        Route::group(['middleware' => ['auth:api', 'can:check-merchant,'.ProductController::class]], function () {
-                Route::post('/', 'store');
-                Route::delete('/{product}', 'destroy');
-            });
+        Route::middleware('auth:api')->group(function () {
+            Route::post('/', 'store')
+                ->middleware('can:create,'.ProductController::class);
+            Route::delete('/{product}', 'destroy')
+                ->middleware('can:delete,'.ProductController::class);;
+        });
     });
 
-Route::group(['middleware' => ['auth:api', 'can:check-customer,'.BasketController::class]], function () {
-    Route::prefix('baskets')
-        ->controller(BasketController::class)
-        ->group(function () {
-            Route::get('/', 'index');
-            Route::post('/', 'store');
-            Route::delete('/{basket}', 'destroy');
-        });
-});
+Route::prefix('baskets')
+    ->controller(BasketController::class)
+    ->middleware('auth:api')
+    ->group(function () {
+        Route::get('/', 'index')
+            ->middleware('can:view-any'.BasketController::class);
+        Route::post('/', 'store')
+            ->middleware('can:create'.BasketController::class);
+        Route::delete('/{basket}', 'destroy')
+            ->middleware('can:delete'.BasketController::class);
+    });
 
