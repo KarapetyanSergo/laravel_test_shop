@@ -9,30 +9,18 @@ class BrandPolicy
 {
     use HandlesAuthorization;
 
-    public function create (User $user): bool
+    public function create(User $user): bool
     {
-        if ($user->type == 'merchant' || $user->type == 'admin') {
-            return true;
-        }
-
-        return false;
+        return in_array($user->type, ['admin', 'merchant']);
     }
 
-    public function delete (User $user): bool
+    public function delete(User $user): bool
     {
-        if ($user->type == 'merchant' || $user->type == 'admin') {
-            return true;
-        }
-
-        return false;
+        return in_array($user->type, ['admin', 'merchant']);
     }
 
-    public function updateStatus (User $user): bool
+    public function updateStatus(User $user): bool
     {
-        if($user->type == 'admin') {
-            return true;
-        }
-
-        return false;
+        return $user->type = 'admin';
     }
 }

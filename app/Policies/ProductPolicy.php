@@ -12,19 +12,11 @@ class ProductPolicy
 
     public function create(User $user): bool
     {
-        if ($user->type == 'merchant'  || $user->type == 'admin') {
-            return true;
-        }
-
-        return false;
+        return in_array($user->type, ['admin', 'merchant']);
     }
 
     public function delete(User $user): bool
     {
-        if ($user->type == 'merchant'  || $user->type == 'admin') {
-            return true;
-        }
-
-        return false;
+        return in_array($user->type, ['admin', 'merchant']);
     }
 }

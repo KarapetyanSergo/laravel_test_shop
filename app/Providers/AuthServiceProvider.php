@@ -2,11 +2,11 @@
 
 namespace App\Providers;
 
-use App\Http\Controllers\Api\BasketController;
+use App\Http\Controllers\Api\CartController;
 use App\Http\Controllers\Api\BrandController;
 use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\ProductController;
-use App\Policies\BasketPolicy;
+use App\Policies\CartPolicy;
 use App\Policies\BrandPolicy;
 use App\Policies\CategoryPolicy;
 use App\Policies\ProductPolicy;
@@ -22,7 +22,7 @@ class AuthServiceProvider extends ServiceProvider
      * @var array<class-string, class-string>
      */
     protected $policies = [
-        BasketController::class => BasketPolicy::class,
+        CartController::class => CartPolicy::class,
         ProductController::class => ProductPolicy::class,
         CategoryController::class => CategoryPolicy::class,
         BrandController::class => BrandPolicy::class

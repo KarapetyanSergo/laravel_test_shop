@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\Api\BasketController;
+use App\Http\Controllers\Api\CartController;
 use App\Http\Controllers\Api\ProductController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -59,15 +59,15 @@ Route::prefix('products')
         });
     });
 
-Route::prefix('baskets')
-    ->controller(BasketController::class)
+Route::prefix('cart')
+    ->controller(CartController::class)
     ->middleware('auth:api')
     ->group(function () {
         Route::get('/', 'index')
-            ->middleware('can:view-any'.BasketController::class);
+            ->middleware('can:view-any,'.CartController::class);
         Route::post('/', 'store')
-            ->middleware('can:create'.BasketController::class);
-        Route::delete('/{basket}', 'destroy')
-            ->middleware('can:delete'.BasketController::class);
+            ->middleware('can:create,'.CartController::class);
+        Route::delete('/', 'destroy')
+            ->middleware('can:delete,'.CartController::class);
     });
 

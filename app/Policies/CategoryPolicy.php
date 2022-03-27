@@ -12,19 +12,11 @@ class CategoryPolicy
 
     public function create (User $user): bool
     {
-        if ($user->type == 'admin') {
-            return true;
-        }
-
-        return false;
+        return $user->type == 'admin';
     }
 
     public function delete (User $user): bool
     {
-        if ($user->type == 'admin') {
-            return true;
-        }
-
-        return false;
+        return $user->type == 'admin';
     }
 }
