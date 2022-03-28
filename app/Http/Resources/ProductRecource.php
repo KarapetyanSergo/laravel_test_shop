@@ -16,7 +16,6 @@ class ProductRecource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'size' => $this->size,
             'color' => $this->color,
             'price' => $this->price,
             'created_at' => $this->created_at,

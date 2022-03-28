@@ -9,7 +9,7 @@ class BrandStatusChangeRequest extends FormRequest
     public function rules()
     {
         return [
-            'status' => 'required|string'
+            'status' => 'required|string|regex:/^[confirmed]+$/',
         ];
     }
 }

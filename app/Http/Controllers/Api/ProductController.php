@@ -8,33 +8,34 @@ use App\Http\Resources\CategoryRecource;
 use App\Http\Resources\ProductRecource;
 use App\Models\Product;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Http\JsonResponse;
 
 class ProductController extends Controller
 {
-    public function index(): Collection
+    public function index(): JsonResponse
     {
-        return Product::all();
+        return response()->json(Product::all());
     }
 
-    public function store(ProductStoreRequest $request): ProductRecource
+    public function store(ProductStoreRequest $request): JsonResponse
     {
         $createProduct = Product::create($request->validated());
 
-        return new ProductRecource($createProduct);
+        return response()->json(new ProductRecource($createProduct));
     }
 
-    public function show(Product $product): object
+    public function show(Product $product): JsonResponse
     {
-        return (object)[
+        return response()->json([
             'product' => new ProductRecource($product),
             'category' => new CategoryRecource($product->category)
-        ];
+        ]);
     }
 
-    public function destroy(Product $product): Product
+    public function destroy(Product $product): JsonResponse
     {
         $product->delete();
 
-        return $product;
+        return response()->json($product);
     }
 }
