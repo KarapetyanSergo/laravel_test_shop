@@ -67,7 +67,9 @@ Route::prefix('cart')
             ->middleware('can:view-any,'.CartController::class);
         Route::post('/', 'store')
             ->middleware('can:create,'.CartController::class);
-        Route::delete('/', 'destroy')
+        Route::delete('/{product_id}', 'destroy')
             ->middleware('can:delete,'.CartController::class);
+        Route::put('/{product_id}', 'update')
+            ->middleware('can:update,'.CartController::class);
     });
 

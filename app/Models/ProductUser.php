@@ -8,9 +8,4 @@ use Illuminate\Database\Eloquent\Relations\Pivot;
 class ProductUser extends Pivot
 {
     use HasFactory;
-
-    protected $fillable = [
-        'user_id',
-        'product_id'
-    ];
 }

@@ -24,4 +24,9 @@ class CartPolicy
     {
         return in_array($user->type, ['admin', 'customer']);
     }
+
+    public function update(User $user): bool
+    {
+        return in_array($user->type, ['admin', 'customer']);
+    }
 }
