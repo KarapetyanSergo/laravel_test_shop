@@ -7,14 +7,22 @@ use App\Http\Requests\Product\ProductStoreRequest;
 use App\Http\Resources\CategoryRecource;
 use App\Http\Resources\ProductRecource;
 use App\Models\Product;
-use Illuminate\Database\Eloquent\Collection;
+use App\Services\FilterService;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
-    public function index(): JsonResponse
+    public function index(Request $request, FilterService $service): JsonResponse
     {
-        return response()->json(Product::all());
+        $filters = json_decode($request->getContent(), true);
+        return response()
+            ->json(
+                $service->filtration(
+                    $filters, new Product()
+                )->get()
+            );
     }
 
     public function store(ProductStoreRequest $request): JsonResponse
