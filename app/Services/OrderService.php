@@ -10,16 +10,24 @@ use Illuminate\Database\Eloquent\Collection;
 
 class OrderService
 {
-    public function store(): void
+    public function store(): bool
     {
         $user = Auth::user();
         $carts = ProductUser::where('user_id', $user->id)->get();
+
+        if (!$carts->all()) {
+            return false;
+        }
 
         $builder = $user->products();
         $products = $builder->get();
 
         $ordersData = $this->reductionNumberOfProducts($products, $carts);
         $this->createOrder($user->id, $ordersData);
+
+        $builder->detach();
+
+        return true;
     }
 
     private function reductionNumberOfProducts(Collection $products, Collection $carts): array
@@ -79,7 +87,6 @@ class OrderService
             }
 
             $order->products()->attach($orders);
-            var_dump('asd');
         }
     }
 }

@@ -11,10 +11,16 @@ class OrderController extends Controller
     public function create(): JsonResponse
     {
         $orderService = new OrderService();
-        $orderService->store();
+        $create = $orderService->store();
+
+        if ($create) {
+            $message = 'Order is processed!';
+        } else {
+            $message = 'No clearance products!';
+        }
 
         return response()->json([
-            'message' => 'Success!'
+            'message' => $message
         ]);
     }
 }
