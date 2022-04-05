@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Cart;
 
+use App\Rules\CartRule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
@@ -22,7 +23,11 @@ class CartStoreRequest extends FormRequest
                 }),
             ],
             'size' => 'required|string|max:10',
-            'count' => 'integer'
+            'count' => [
+                'required',
+                'integer',
+                new CartRule($this->product_id, $this->size)
+            ]
         ];
     }
 }

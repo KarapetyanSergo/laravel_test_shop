@@ -9,7 +9,7 @@ class CartDeleteRequest extends FormRequest
     public function rules(): array
     {
         return [
-
+            'product_id' => 'required'
         ];
     }
 }

@@ -2,12 +2,9 @@
 
 namespace App\Services;
 
-use App\Models\Product;
-use Illuminate\Database\ConnectionInterface;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\DB;
 
 class FilterService
 {
@@ -15,19 +12,19 @@ class FilterService
     {
         return Collection::make([
             'category_id' => function ($query, $value) {
-                $query->where('category_id', $value);
+                return $query->where('category_id', $value);
             },
 
             'color' => function ($query, $value) {
-                $query->where('color', $value);
+                return $query->where('color', $value);
             }
         ]);
     }
 
-    public function filtration(Array $filters, Model $query): Model
+    public function filtration(Collection $filters, Model $query): Builder
     {
-        foreach ($filters as $key=>$filter) {
-            $this->rules()->all()[$key]($query, $filter);
+        foreach ($filters as $key => $filter) {
+            $query = $this->rules()->all()[$key]($query, $filter);
         }
 
         return $query;

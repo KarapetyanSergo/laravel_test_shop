@@ -27,6 +27,7 @@ class CategoryController extends Controller
 
     public function destroy(Category $category): JsonResponse
     {
+        dd('asd');
         $category->delete();
 
         return response()->json($category);

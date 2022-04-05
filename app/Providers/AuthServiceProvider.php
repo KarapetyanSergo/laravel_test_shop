@@ -2,13 +2,17 @@
 
 namespace App\Providers;
 
+use App\Http\Controllers\Api\AvailabilityController;
 use App\Http\Controllers\Api\CartController;
 use App\Http\Controllers\Api\BrandController;
 use App\Http\Controllers\Api\CategoryController;
+use App\Http\Controllers\Api\OrderController;
 use App\Http\Controllers\Api\ProductController;
+use App\Policies\AvailabilityPolicy;
 use App\Policies\CartPolicy;
 use App\Policies\BrandPolicy;
 use App\Policies\CategoryPolicy;
+use App\Policies\OrderPolicy;
 use App\Policies\ProductPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
@@ -25,7 +29,9 @@ class AuthServiceProvider extends ServiceProvider
         CartController::class => CartPolicy::class,
         ProductController::class => ProductPolicy::class,
         CategoryController::class => CategoryPolicy::class,
-        BrandController::class => BrandPolicy::class
+        BrandController::class => BrandPolicy::class,
+        AvailabilityController::class => AvailabilityPolicy::class,
+        OrderController::class => OrderPolicy::class
     ];
 
     /**

@@ -8,7 +8,7 @@ use App\Http\Resources\CategoryRecource;
 use App\Http\Resources\ProductRecource;
 use App\Models\Product;
 use App\Services\FilterService;
-use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
@@ -16,13 +16,13 @@ class ProductController extends Controller
 {
     public function index(Request $request, FilterService $service): JsonResponse
     {
-        $filters = json_decode($request->getContent(), true);
-        return response()
-            ->json(
-                $service->filtration(
-                    $filters, new Product()
-                )->get()
-            );
+        $filters = Collection::make(
+            json_decode($request->getContent(), true)
+        );
+
+        return response()->json(
+            $service->filtration($filters, new Product())->get()
+        );
     }
 
     public function store(ProductStoreRequest $request): JsonResponse
