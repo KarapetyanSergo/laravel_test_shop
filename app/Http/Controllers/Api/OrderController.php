@@ -20,37 +20,56 @@ class OrderController extends Controller
 
         $builder = $user->products();
         $products = $builder->get();
+        $price = 0;
+        $productOrders = [];
+        $response = [];
 
-        $price = $products->first()->price;
-        $cartKey = array_search($products->first()->id, array_column($carts->all(), 'product_id'));
+        foreach ($products as $product) {
+            $productId = $product->id;
+            $cartIndex = array_search($productId, array_column($carts->all(), 'product_id'));
+            $cartProductCount = $carts[$cartIndex]->count;
+            $cartProductSize = $carts[$cartIndex]->size;
 
-        $query = ProductAvailabilities::where([
-            ['product_id', '=', $products[0]->id],
-            ['size', '=', $carts[$cartKey]->size]
-        ]);
-
-        foreach ($products as $key => $product) {
-            if ($key < 1) continue;
-
-            $cartKey = array_search($product->id, array_column($carts->all(), 'product_id'));
-
-            $query = $query->orWhere([
-                ['product_id', '=', $product->id],
-                ['size', '=', $carts[$cartKey]->size]
+            $productAvailability = ProductAvailabilities::firstOrNew([
+                ['product_id', '=', $productId],
+                ['size', '=', $cartProductSize]
             ]);
 
-            $price = $price + $product->price;
+            if ($productAvailability->count >= $cartProductCount) {
+                $productAvailability->count = $productAvailability->count - $cartProductCount;
+
+                $price = $price + $product->price;
+                $response['message'][] = 'You bought ' . $cartProductCount . ' products with id = ' . $productId;
+                var_dump('asd');
+                $productOrders[] = [
+                    'product_id' => $productId,
+                    'size' => $cartProductSize,
+                    'count' => $cartProductCount
+                ];
+            } else {
+                $response['message'][] = 'There are not so many products with id = ' . $productId;
+            }
+
+            $productAvailability->save();
         }
-        dd($query->decrement('count', 3)->toSql());
 
-        Order::create([
-            'user_id' => $user->id,
-            'price' => $price,
-        ]);
+        if ($price > 0) {
+            $order = Order::create([
+                'user_id' => $user->id,
+                'price' => $price,
+            ]);
 
+            $orderId = $order->get()->first()->id;
 
-        return response()->json([
-            'asd'
-        ]);
+            for ($i=0; $i<count($productOrders); $i++) {
+                $productOrders[$i]['order_id'] = $orderId;
+            }
+
+            $order->products()->attach($productOrders);
+
+            $response['price'] = $price;
+        }
+
+        return response()->json($response);
     }
 }
