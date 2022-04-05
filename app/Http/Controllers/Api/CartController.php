@@ -8,9 +8,7 @@ use App\Http\Requests\Cart\CartPutRequest;
 use App\Http\Requests\Cart\CartStoreRequest;
 use App\Models\Product;
 use App\Models\ProductUser;
-use App\Models\User;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 
 class CartController extends Controller
