@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Category\CategoryStoreRequest;
 use App\Models\Category;
 use Illuminate\Http\JsonResponse;
-use Ramsey\Collection\Collection;
 
 class CategoryController extends Controller
 {
@@ -27,7 +26,6 @@ class CategoryController extends Controller
 
     public function destroy(Category $category): JsonResponse
     {
-        dd('asd');
         $category->delete();
 
         return response()->json($category);

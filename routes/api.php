@@ -9,10 +9,7 @@ use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\BrandController;
 use App\Http\Controllers\Api\OrderController;
 use App\Http\Controllers\Api\AvailabilityController;
-
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+use App\Http\Controllers\Admin\UserController;
 
 Route::controller(AuthController::class)->group(function () {
     Route::post('/register', 'register');
@@ -20,8 +17,16 @@ Route::controller(AuthController::class)->group(function () {
     Route::middleware('auth:api')->post('logout', 'logout');
 });
 
+Route::prefix('/user')
+    ->controller(UserController::class)
+    ->middleware('auth:api')
+    ->group(function(){
+        Route::get('/', 'index')->middleware('can:show,'.UserController::class);
+        Route::get('/{user}', 'show')->middleware('can:show,'.UserController::class);
+        Route::delete('/{user}', 'destroy')->middleware('can:delete,'.UserController::class);
+    });
 
-Route::prefix('category')
+Route::prefix('/category')
     ->controller(CategoryController::class)
     ->middleware('auth:api')
     ->group(function () {
@@ -34,7 +39,7 @@ Route::prefix('category')
     });
 
 
-Route::prefix('brand')
+Route::prefix('/brand')
     ->controller(BrandController::class)
     ->middleware('auth:api')
     ->group(function () {
@@ -48,7 +53,7 @@ Route::prefix('brand')
             ->middleware('can:update-status,'.BrandController::class);
     });
 
-Route::prefix('product')
+Route::prefix('/product')
     ->controller(ProductController::class)
     ->group(function () {
         Route::get('/',  'index');
@@ -62,7 +67,7 @@ Route::prefix('product')
         });
     });
 
-Route::prefix('cart')
+Route::prefix('/cart')
     ->controller(CartController::class)
     ->middleware('auth:api')
     ->group(function () {
@@ -76,7 +81,7 @@ Route::prefix('cart')
             ->middleware('can:update,'.CartController::class);
     });
 
-Route::prefix('availability')
+Route::prefix('/availability')
     ->controller(AvailabilityController::class)
     ->middleware('auth:api')
     ->group(function () {
@@ -84,7 +89,7 @@ Route::prefix('availability')
             ->middleware('can:update,'.AvailabilityController::class);
     });
 
-Route::prefix('order')
+Route::prefix('/order')
     ->controller(OrderController::class)
     ->middleware('auth:api')
     ->group(function () {

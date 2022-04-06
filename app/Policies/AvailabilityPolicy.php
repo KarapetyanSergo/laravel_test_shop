@@ -11,6 +11,6 @@ class AvailabilityPolicy
 
     public function update(User $user): bool
     {
-        return in_array($user->type, ['admin', 'merchant']);
+        return in_array($user->type, ['superadmin', 'admin', 'merchant']);
     }
 }

@@ -12,21 +12,21 @@ class CartPolicy
 
     public function viewAny(User $user): bool
     {
-        return in_array($user->type, ['admin', 'customer']);
+        return in_array($user->type, ['superadmin', 'admin', 'customer']);
     }
 
     public function create(User $user): bool
     {
-        return in_array($user->type, ['admin', 'customer']);
+        return in_array($user->type, ['superadmin', 'admin', 'customer']);
     }
 
     public function delete(User $user): bool
     {
-        return in_array($user->type, ['admin', 'customer']);
+        return in_array($user->type, ['superadmin', 'admin', 'customer']);
     }
 
     public function update(User $user): bool
     {
-        return in_array($user->type, ['admin', 'customer']);
+        return in_array($user->type, ['superadmin', 'admin', 'customer']);
     }
 }

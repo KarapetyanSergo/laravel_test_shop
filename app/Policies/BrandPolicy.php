@@ -11,16 +11,16 @@ class BrandPolicy
 
     public function create(User $user): bool
     {
-        return in_array($user->type, ['admin', 'merchant']);
+        return in_array($user->type, ['superadmin', 'admin', 'merchant']);
     }
 
     public function delete(User $user): bool
     {
-        return in_array($user->type, ['admin', 'merchant']);
+        return in_array($user->type, ['superadmin', 'admin', 'merchant']);
     }
 
     public function updateStatus(User $user): bool
     {
-        return $user->type = 'admin';
+        return in_array($user->type, ['superadmin', 'admin']);
     }
 }

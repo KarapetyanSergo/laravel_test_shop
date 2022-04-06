@@ -11,11 +11,11 @@ class CategoryPolicy
 
     public function create(User $user): bool
     {
-        return $user->type == 'admin';
+        return in_array($user->type, ['superadmin', 'admin']);
     }
 
     public function delete(User $user): bool
     {
-        return $user->type == 'admin';
+        return in_array($user->type, ['superadmin', 'admin']);
     }
 }

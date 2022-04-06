@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Filters\MinMaxFilter;
+use App\Filters\RelationshipFilter;
 use App\Filters\SearchFilter;
 use App\Filters\SimpleFilter;
 use Illuminate\Database\Eloquent\Builder;
@@ -17,7 +18,8 @@ class FilterService
             'category_id' => new SimpleFilter('category_id'),
             'color' => new SimpleFilter('color'),
             'price' => new MinMaxFilter('price'),
-            'user_search' => new SearchFilter(['name', 'email'])
+            'user_search' => new SearchFilter(['name', 'email']),
+            'category_product' => new RelationshipFilter('name', 'product')
         ]);
     }
 

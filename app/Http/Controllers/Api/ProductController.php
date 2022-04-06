@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Product\ProductStoreRequest;
 use App\Http\Resources\CategoryRecource;
 use App\Http\Resources\ProductRecource;
+use App\Models\Category;
 use App\Models\Product;
 use App\Models\User;
 use App\Services\FilterService;
@@ -20,11 +21,7 @@ class ProductController extends Controller
         $filters = json_decode($request->getContent(), true);
 
         if (isset($filters['filters'])) {
-            $filters = Collection::make(
-                json_decode($request->getContent(), true)['filters']
-            );
-
-            $response = $service->filtration($filters, new User())->get();
+            $response = $service->filtration(Collection::make($filters['filters']), new Product())->get();
         } else {
             $response = Product::all();
         }

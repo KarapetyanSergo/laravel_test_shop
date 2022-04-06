@@ -11,6 +11,6 @@ class OrderPolicy
 
     public function update(User $user): bool
     {
-        return in_array($user->type, ['admin', 'customer']);
+        return in_array($user->type, ['superadmin', 'admin', 'customer']);
     }
 }
