@@ -15,4 +15,14 @@ class ProductService
 
         return $filter->handle($filtersData, Product::query());
     }
+
+    public function post(array $requestData)
+    {
+        return Product::create($requestData);
+    }
+
+    public function delete(array $requestData)
+    {
+
+    }
 }

@@ -21,11 +21,9 @@ class ProductController extends Controller
         return response()->json($response);
     }
 
-    public function store(ProductStoreRequest $request): JsonResponse
+    public function store(ProductStoreRequest $request, ProductService $service): JsonResponse
     {
-        $createProduct = Product::create($request->validated());
-
-        return response()->json(new ProductRecource($createProduct));
+        return response()->json(new ProductRecource($service->post($request->validated())));
     }
 
     public function show(Product $product): JsonResponse
