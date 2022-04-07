@@ -2,6 +2,7 @@
 
 namespace App\Filters\Rules;
 
+use App\Filters\FilterRule;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 
@@ -16,10 +17,10 @@ class RelationshipRule implements FilterRule
         $this->relationship = $relationship;
     }
 
-    public function filtration(Builder $query, Collection $filterParameters): Builder
+    public function filter(Builder $query, $value): Builder
     {
         $relationship = $this->relationship;
 
-        dd($query->where($this->column, $filterParameters)->get()->first()->$relationship->all());
+        dd($query->where($this->column, $value)->get()->first()->$relationship->all());
     }
 }

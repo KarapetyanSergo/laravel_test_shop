@@ -5,7 +5,6 @@ namespace App\Filters;
 use App\Filters\Rules\MinMaxRule;
 use App\Filters\Rules\RelationshipRule;
 use App\Filters\Rules\SimpleRule;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 
 class ProductFilter extends Filter

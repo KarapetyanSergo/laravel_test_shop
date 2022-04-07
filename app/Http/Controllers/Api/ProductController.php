@@ -34,9 +34,9 @@ class ProductController extends Controller
         ]);
     }
 
-    public function destroy(Product $product): JsonResponse
+    public function destroy(Product $product, ProductService $service): JsonResponse
     {
-        $product->delete();
+        $service->delete($product);
 
         return response()->json($product);
     }

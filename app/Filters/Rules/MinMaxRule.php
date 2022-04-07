@@ -2,8 +2,8 @@
 
 namespace App\Filters\Rules;
 
+use App\Filters\FilterRule;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Collection;
 
 class MinMaxRule implements FilterRule
 {
@@ -14,11 +14,11 @@ class MinMaxRule implements FilterRule
         $this->colimn = $column;
     }
 
-    public function filtration(Builder $query, Collection $filterParameters): Builder
+    public function filter(Builder $query, $value): Builder
     {
         return $query->where([
-            [$this->colimn, '>=', $filterParameters->all()['min']],
-            [$this->colimn, '<=', $filterParameters->all()['max']]
+            [$this->colimn, '>=', $value['min']],
+            [$this->colimn, '<=', $value['max']]
         ]);
     }
 }

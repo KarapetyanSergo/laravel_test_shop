@@ -7,5 +7,5 @@ use Illuminate\Database\Eloquent\Collection;
 
 interface FilterRule
 {
-    public function filtration(Builder $query, Collection $filterParameters): Builder;
+    public function filter(Builder $query, $value): Builder;
 }

@@ -21,8 +21,8 @@ class ProductService
         return Product::create($requestData);
     }
 
-    public function delete(array $requestData)
+    public function delete(Product $product)
     {
-
+        $product->delete();
     }
 }

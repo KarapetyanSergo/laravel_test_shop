@@ -12,7 +12,7 @@ abstract class Filter
     public function handle(array $filters, Builder $query): Builder
     {
         foreach ($filters as $key => $filter) {
-            $query = $this->rules()->get($key)->filtration($query, Collection::make($filter));
+            $query = $this->rules()->get($key)->filter($query, $filter);
         }
 
         return $query;

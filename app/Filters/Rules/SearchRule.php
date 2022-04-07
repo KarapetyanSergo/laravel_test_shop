@@ -15,10 +15,10 @@ class SearchRule implements FilterRule
         $this->columns = $columns;
     }
 
-    public function filtration(Builder $query, Collection $filterParameters): Builder
+    public function filter(Builder $query, $value): Builder
     {
         foreach ($this->columns as $column) {
-            $query = $query->where($column, 'like', '%'.$filterParameters->first().'%');
+            $query = $query->where($column, 'like', '%'.$value->first().'%');
         }
 
         return $query;
