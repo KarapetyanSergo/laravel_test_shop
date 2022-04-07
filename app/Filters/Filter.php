@@ -9,10 +9,10 @@ abstract class Filter
 {
     abstract public function rules(): Collection;
 
-    public function handle(array $filters, Builder $query): Builder
+    public function handle(array $parameters, Builder $query): Builder
     {
-        foreach ($filters as $key => $filter) {
-            $query = $this->rules()->get($key)->filter($query, $filter);
+        foreach ($parameters as $name => $value) {
+            $query = $this->rules()->get($name)->filter($query, $value);
         }
 
         return $query;
