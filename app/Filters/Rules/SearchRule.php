@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Filters;
+namespace App\Filters\Rules;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 
-class SearchFilter implements Filter
+class SearchRule implements FilterRule
 {
     private array $columns;
 
@@ -14,10 +14,10 @@ class SearchFilter implements Filter
         $this->columns = $columns;
     }
 
-    public function filtration(Builder $query, Collection $value): Builder
+    public function filtration(Builder $query, Collection $filterParameters): Builder
     {
         foreach ($this->columns as $column) {
-            $query = $query->where($column, 'like', '%'.$value->first().'%');
+            $query = $query->where($column, 'like', '%'.$filterParameters->first().'%');
         }
 
         return $query;

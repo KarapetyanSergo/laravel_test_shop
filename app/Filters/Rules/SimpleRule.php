@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Filters;
+namespace App\Filters\Rules;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 
-class SimpleFilter implements Filter
+class SimpleRule implements FilterRule
 {
     private $column;
 
@@ -14,8 +14,8 @@ class SimpleFilter implements Filter
         $this->column = $column;
     }
 
-    public function filtration(Builder $query, Collection $value): Builder
+    public function filtration(Builder $query, Collection $filterParameters): Builder
     {
-        return $query->where($this->column, $value);
+        return $query->where($this->column, $filterParameters);
     }
 }

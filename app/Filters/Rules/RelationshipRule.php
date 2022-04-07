@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Filters;
+namespace App\Filters\Rules;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 
-class RelationshipFilter implements Filter
+class RelationshipRule implements FilterRule
 {
     private $column;
     private $relationship;
@@ -16,10 +16,10 @@ class RelationshipFilter implements Filter
         $this->relationship = $relationship;
     }
 
-    public function filtration(Builder $query, Collection $value): Builder
+    public function filtration(Builder $query, Collection $filterParameters): Builder
     {
         $relationship = $this->relationship;
 
-        dd($query->where($this->column, $value)->get()->first()->$relationship->all());
+        dd($query->where($this->column, $filterParameters)->get()->first()->$relationship->all());
     }
 }

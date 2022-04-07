@@ -2,25 +2,19 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Filters\UserFilter;
 use App\Http\Controllers\Controller;
-use App\Models\Category;
 use App\Models\User;
-use App\Services\FilterService;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
-    public function index(Request $request, FilterService $filterService): JsonResponse
+    public function index(Request $request, UserFilter $filter): JsonResponse
     {
         $filters = json_decode($request->getContent(), true);
 
-        if (isset($filters['filters'])) {
-            $response = $filterService->filtration(Collection::make($filters['filters']), new User())->get();
-        } else {
-            $response = User::all();
-        }
+        $response = $filter->filtration($filters, User::query())->get();
 
         return response()->json($response);
     }
