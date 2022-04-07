@@ -19,9 +19,4 @@ class ProductFilter extends Filter
             'category_product' => new RelationshipRule('name', 'product')
         ]);
     }
-
-    public function filtration(Array $filters, Builder $query): Builder
-    {
-        return $this->handle($filters, $query);
-    }
 }

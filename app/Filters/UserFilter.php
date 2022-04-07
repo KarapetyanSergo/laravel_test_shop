@@ -14,9 +14,4 @@ class UserFilter extends Filter
             'search' => new SearchRule(['name', 'email']),
         ]);
     }
-
-    public function filtration(Array $filters, Builder $query): Builder
-    {
-        return $this->handle($filters, $query);
-    }
 }

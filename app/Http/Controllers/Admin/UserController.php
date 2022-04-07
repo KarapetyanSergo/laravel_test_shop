@@ -5,16 +5,15 @@ namespace App\Http\Controllers\Admin;
 use App\Filters\UserFilter;
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Services\UserService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
-    public function index(Request $request, UserFilter $filter): JsonResponse
+    public function index(Request $request, UserService $service): JsonResponse
     {
-        $filters = json_decode($request->getContent(), true);
-
-        $response = $filter->filtration($filters, User::query())->get();
+        $response = $service->get($request->all())->get();
 
         return response()->json($response);
     }

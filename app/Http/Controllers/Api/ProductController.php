@@ -8,16 +8,15 @@ use App\Http\Requests\Product\ProductStoreRequest;
 use App\Http\Resources\CategoryRecource;
 use App\Http\Resources\ProductRecource;
 use App\Models\Product;
+use App\Services\ProductService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
-    public function index(Request $request, ProductFilter $filter): JsonResponse
+    public function index(Request $request,  ProductService $service): JsonResponse
     {
-        $response = $filter->filtration($request->all(), Product::query())
-            ->where('category_id', '!=', 3)
-            ->get();
+        $response = $service->get($request->all())->get();
 
         return response()->json($response);
     }
