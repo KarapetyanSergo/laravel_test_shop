@@ -4,7 +4,6 @@ namespace App\Filters;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Database\Eloquent\Model;
 
 class MinMaxFilter implements Filter
 {
@@ -15,7 +14,7 @@ class MinMaxFilter implements Filter
         $this->colimn = $column;
     }
 
-    public function filtration(Model $query, Collection $value): Builder
+    public function filtration(Builder $query, Collection $value): Builder
     {
         return $query->where([
             [$this->colimn, '>=', $value->all()['min']],

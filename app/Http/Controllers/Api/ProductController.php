@@ -21,7 +21,7 @@ class ProductController extends Controller
         $filters = json_decode($request->getContent(), true);
 
         if (isset($filters['filters'])) {
-            $response = $service->filtration(Collection::make($filters['filters']), new Product())->get();
+            $response = $service->filtration(Collection::make($filters['filters']), Product::query())->get();
         } else {
             $response = Product::all();
         }

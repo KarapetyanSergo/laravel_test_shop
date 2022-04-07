@@ -4,7 +4,6 @@ namespace App\Filters;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Database\Eloquent\Model;
 
 class RelationshipFilter implements Filter
 {
@@ -17,7 +16,7 @@ class RelationshipFilter implements Filter
         $this->relationship = $relationship;
     }
 
-    public function filtration(Model $query, Collection $value): Builder
+    public function filtration(Builder $query, Collection $value): Builder
     {
         $relationship = $this->relationship;
 

@@ -23,7 +23,7 @@ class FilterService
         ]);
     }
 
-    public function filtration(Collection $filters, Model $query): Builder
+    public function filtration(Collection $filters, Builder $query): Builder
     {
         foreach ($filters as $key => $filter) {
             $query = $this->rules()->all()[$key]->filtration($query, Collection::make($filter));
