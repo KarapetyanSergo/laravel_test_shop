@@ -11,10 +11,10 @@ abstract class Filter
 
     abstract public function filtration(Array $filters, Builder $query): Builder;
 
-    protected function handle($query)
+    protected function handle(Array $filters, Builder $query)
     {
         if (isset($filters['filters'])) {
-            foreach ($filters as $key => $filter) {
+            foreach ($filters['filters'] as $key => $filter) {
                 $query = $this->rules()->all()[$key]->filtration($query, Collection::make($filter));
             }
         }

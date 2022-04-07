@@ -15,8 +15,8 @@ class UserFilter extends Filter
         ]);
     }
 
-    public function filtration(array $filters, Builder $query): Builder
+    public function filtration(Array $filters, Builder $query): Builder
     {
-        return $this->handle($query);
+        return $this->handle($filters, $query);
     }
 }
