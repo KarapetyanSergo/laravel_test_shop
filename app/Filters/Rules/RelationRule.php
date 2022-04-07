@@ -3,10 +3,10 @@
 namespace App\Filters\Rules;
 
 use App\Filters\FilterRule;
+use App\Models\Product;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Collection;
 
-class RelationshipRule implements FilterRule
+class RelationRule implements FilterRule
 {
     private $column;
     private $relationship;
@@ -21,6 +21,8 @@ class RelationshipRule implements FilterRule
     {
         $relationship = $this->relationship;
 
-        dd($query->where($this->column, $value)->get()->first()->$relationship->all());
+         return $query->whereHas($relationship, function (Builder $query) use ($value) {
+             $query->where($this->column, '=', $value);
+         });
     }
 }

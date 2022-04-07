@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Filters\ProductFilter;
+use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Database\Eloquent\Builder;
 
