@@ -10,16 +10,9 @@ class CategoryRule implements Rule
 {
     public function passes($attribute, $value): bool
     {
-        $children = Category::where('id', $value)
+        return Category::where('id', $value)
             ->whereDoesntHave('children')
-            ->get()
-            ->all();
-
-        if(!$children) {
-            return false;
-        }
-
-        return true;
+            ->exists();
     }
 
     public function message(): string

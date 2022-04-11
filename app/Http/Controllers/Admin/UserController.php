@@ -13,9 +13,7 @@ class UserController extends Controller
 {
     public function index(Request $request, UserService $service): JsonResponse
     {
-        $response = $service->get($request->all())->get();
-
-        return response()->json($response);
+        return response()->json($service->get($request->all()));
     }
 
     public function show(User $user): JsonResponse

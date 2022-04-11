@@ -35,7 +35,7 @@ class CartController extends Controller
         return response()->json($response);
     }
 
-    public function store(CartStoreRequest $request)
+    public function store(CartStoreRequest $request): JsonResponse
     {
         $product = Product::find($request->product_id);
 
@@ -64,10 +64,9 @@ class CartController extends Controller
     {
         $productId = $request->product_id;
 
-        $userProduct = ProductUser::where([
-            ['user_id', '=', Auth::user()->id],
-            ['product_id', '=', $productId]
-        ])->update($request->validated());
+        ProductUser::where('user_id', Auth::user()->id)
+            ->where('product_id', $productId)
+            ->update($request->validated());
 
         return response()->json([
             'message' => 'Success!'

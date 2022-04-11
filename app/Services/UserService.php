@@ -3,16 +3,18 @@
 namespace App\Services;
 
 use App\Filters\UserFilter;
-use App\Models\Product;
-use Illuminate\Database\Eloquent\Builder;
+use App\Models\User;
+use Illuminate\Database\Eloquent\Collection;
 
 class UserService
 {
-    public function get(array $requestData): Builder
+    public function get(array $requestData): Collection
     {
         $filter = new UserFilter();
         $filtersData = $requestData['filters'] ?? [];
 
-        return $filter->handle($filtersData, Product::query());
+        return $filter->handle($filtersData, User::query())
+            ->where('type', '=', 'merchant')
+            ->get();
     }
 }

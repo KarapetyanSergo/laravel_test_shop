@@ -16,9 +16,7 @@ class ProductController extends Controller
 {
     public function index(Request $request,  ProductService $service): JsonResponse
     {
-        $response = $service->get($request->all())->get();
-
-        return response()->json($response);
+        return response()->json($service->get($request->all()));
     }
 
     public function store(ProductStoreRequest $request, ProductService $service): JsonResponse

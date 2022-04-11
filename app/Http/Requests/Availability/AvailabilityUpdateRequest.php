@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Availability;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class AvailabilityUpdateRequest extends FormRequest
 {
@@ -10,7 +11,11 @@ class AvailabilityUpdateRequest extends FormRequest
     {
         return [
             'product_id' => 'required|exists:products,id',
-            'size' => 'required|string',
+            'size' => [
+                'required',
+                'string',
+                Rule::in(['S', 'M', 'L', 'XL']),
+            ],
             'count' => 'required|integer'
         ];
     }

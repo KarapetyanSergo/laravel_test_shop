@@ -3,7 +3,6 @@
 namespace App\Filters\Rules;
 
 use App\Filters\FilterRule;
-use App\Models\Product;
 use Illuminate\Database\Eloquent\Builder;
 
 class RelationRule implements FilterRule

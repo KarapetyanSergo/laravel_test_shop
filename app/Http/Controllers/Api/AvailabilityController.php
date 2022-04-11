@@ -11,8 +11,10 @@ class AvailabilityController extends Controller
 {
     public function update(AvailabilityUpdateRequest $request)
     {
-        $productAvailability = ProductAvailabilities::firstOrNew
-        (['product_id' => $request->product_id, 'size' => $request->size]);
+        $productAvailability = ProductAvailabilities::firstOrNew([
+            'product_id' => $request->product_id,
+            'size' => $request->size
+        ]);
 
         $productAvailability->count = $request->count;
         $productAvailability->save();

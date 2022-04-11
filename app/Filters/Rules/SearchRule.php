@@ -18,7 +18,7 @@ class SearchRule implements FilterRule
     public function filter(Builder $query, $value): Builder
     {
         foreach ($this->columns as $column) {
-            $query = $query->where($column, 'like', '%'.$value->first().'%');
+            $query = $query->orWhere($column, 'like', '%'.$value.'%');
         }
 
         return $query;
