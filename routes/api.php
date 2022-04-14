@@ -88,7 +88,7 @@ Route::prefix('/availabilities')
             ->middleware('can:update,'.AvailabilityController::class);
     });
 
-Route::prefix('/orders')
+Route::prefix('/order')
     ->controller(OrderController::class)
     ->middleware('auth:api')
     ->group(function () {
