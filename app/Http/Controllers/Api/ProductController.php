@@ -7,10 +7,13 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Product\ProductStoreRequest;
 use App\Http\Resources\CategoryRecource;
 use App\Http\Resources\ProductRecource;
+use App\Models\Order;
 use App\Models\Product;
+use App\Models\User;
 use App\Services\ProductService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 
 class ProductController extends Controller
 {

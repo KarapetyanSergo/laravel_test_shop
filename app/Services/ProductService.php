@@ -11,10 +11,14 @@ class ProductService
 {
     public function get(array $requestData): Collection
     {
-        $filter = new ProductFilter();
-        $filtersData = $requestData['filters'] ?? [];
+        if (isset($requestData['filters'])) {
+            $filter = new ProductFilter();
+            $response = $filter->handle($requestData['filters'], Product::query())->get();
+        } else {
+            $response = Product::all();
+        }
 
-        return $filter->handle($filtersData, Product::query())->get();
+        return $response;
     }
 
     public function post(array $requestData): Product

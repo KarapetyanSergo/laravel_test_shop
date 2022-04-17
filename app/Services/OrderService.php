@@ -5,7 +5,6 @@ namespace App\Services;
 use App\Models\Order;
 use App\Models\ProductAvailabilities;
 use App\Models\ProductUser;
-use App\Models\User;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Collection;

@@ -14,6 +14,17 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
+    const USER_TYPES = [
+        'admins' => [
+            'superadmin',
+            'admin'
+        ],
+        'clients' => [
+            'merchant',
+            'customer'
+        ]
+    ];
+
     const TYPE_SUPER_ADMIN = 'superadmin';
     const TYPE_ADMIN = 'admin';
     const TYPE_MERCHANT = 'merchant';

@@ -13,6 +13,19 @@ class Product extends Model
 {
     use HasFactory;
 
+    const PRODUCT_COLORS = [
+        'Red',
+        'Blue',
+        'Green',
+        'Orange',
+        'White',
+        'Black',
+        'Yellow',
+        'Purple',
+        'Silver',
+        'Brown'
+    ];
+
     protected $fillable = [
         'size',
         'color',
@@ -33,5 +46,10 @@ class Product extends Model
     public function orders(): BelongsToMany
     {
         return $this->belongsToMany(Order::class);
+    }
+
+    public function availabilities(): HasMany
+    {
+        return $this->hasMany(ProductAvailabilities::class);
     }
 }

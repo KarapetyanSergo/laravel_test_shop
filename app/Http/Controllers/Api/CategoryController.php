@@ -4,8 +4,11 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Category\CategoryStoreRequest;
+use App\Models\Brand;
 use App\Models\Category;
+use App\Models\Product;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Arr;
 
 class CategoryController extends Controller
 {
