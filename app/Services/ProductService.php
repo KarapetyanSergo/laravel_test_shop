@@ -15,7 +15,7 @@ class ProductService
             $filter = new ProductFilter();
             $response = $filter->handle($requestData['filters'], Product::query())->get();
         } else {
-            $response = Product::all();
+            $response = Product::withCount('orders')->get();
         }
 
         return $response;
