@@ -8,68 +8,29 @@ use App\Http\Requests\Cart\CartPutRequest;
 use App\Http\Requests\Cart\CartStoreRequest;
 use App\Models\Product;
 use App\Models\ProductUser;
+use App\Services\CartService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
 
 class CartController extends Controller
 {
-    public function index(): JsonResponse
+    public function index(CartService $service): JsonResponse
     {
-        $user = Auth::user();
-        $carts = ProductUser::where('user_id', $user->id)->get()->all();
-        $products = $user->products()->get();
-        $price = 0;
-        $response = [];
-
-        foreach ($carts as $cart) {
-            $key = array_search($cart->product_id, array_column($products->all(), 'id'));
-            $price = $price + ($cart->count * $products[$key]->price);
-
-            $response[] = [
-                $products[$key],
-                ['SubTotal' => $price]
-            ];
-
-        }
-
-        return response()->json($response);
+        return response()->json($service->index());
     }
 
-    public function store(CartStoreRequest $request): JsonResponse
+    public function store(CartStoreRequest $request, CartService $service): JsonResponse
     {
-        $product = Product::find($request->product_id);
-
-        $product->users()->attach(Auth::user(), [
-            'size' => $request->size,
-            'count' => $request->count
-        ]);
-
-        return response()->json([
-            'message' => 'Success!'
-        ]);
+        return response()->json($service->store($request));
     }
 
-    public function destroy(CartDeleteRequest $request): JsonResponse
+    public function destroy(CartDeleteRequest $request, CartService $service): JsonResponse
     {
-        $product = Product::find($request->product_id);
-
-        $product->users()->detach(Auth::user());
-
-        return response()->json([
-            'message' => 'Success!'
-        ]);
+        return response()->json($service->destroy($request));
     }
 
-    public function update(CartPutRequest $request): JsonResponse
+    public function update(CartPutRequest $request, CartService $service): JsonResponse
     {
-        $productId = $request->product_id;
-
-        ProductUser::where('user_id', Auth::user()->id)
-            ->where('product_id', $productId)
-            ->update($request->validated());
-
-        return response()->json([
-            'message' => 'Success!'
-        ]);
+        return response()->json($service->update($request));
     }
 }

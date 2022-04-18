@@ -5,22 +5,14 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Availability\AvailabilityUpdateRequest;
 use App\Models\ProductAvailabilities;
+use App\Services\AvailabilityService;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class AvailabilityController extends Controller
 {
-    public function update(AvailabilityUpdateRequest $request)
+    public function update(AvailabilityUpdateRequest $request, AvailabilityService $service): JsonResponse
     {
-        $productAvailability = ProductAvailabilities::firstOrNew([
-            'product_id' => $request->product_id,
-            'size' => $request->size
-        ]);
-
-        $productAvailability->count = $request->count;
-        $productAvailability->save();
-
-        return response()->json([
-            'message' => 'Success!'
-        ]);
+        return response()->json($service->update($request));
     }
 }

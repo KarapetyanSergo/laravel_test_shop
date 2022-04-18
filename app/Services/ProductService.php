@@ -4,7 +4,6 @@ namespace App\Services;
 
 use App\Filters\ProductFilter;
 use App\Models\Product;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 
 class ProductService
