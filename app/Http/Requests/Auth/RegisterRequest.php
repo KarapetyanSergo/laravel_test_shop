@@ -2,6 +2,8 @@
 
 namespace App\Http\Requests\Auth;
 
+use App\Models\Product;
+use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -16,7 +18,7 @@ class RegisterRequest extends FormRequest
             'type' => [
                 'required',
                 'string',
-                Rule::in(['customer', 'merchant']),
+                Rule::in(User::USER_TYPES['clients']),
             ]
         ];
     }

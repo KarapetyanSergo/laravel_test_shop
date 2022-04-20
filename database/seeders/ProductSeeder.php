@@ -26,7 +26,7 @@ class ProductSeeder extends Seeder
                 "updated_at" => \Carbon\Carbon::now(),
             ]);
 
-            $sizes = ['S', 'M', 'L', 'XS', 'XL', 'XXL'];
+            $sizes = Product::PRODUCT_SIZES;
             $productAvailabilities = [];
 
             for ($i=0; $i<rand(1, 6); $i++) {

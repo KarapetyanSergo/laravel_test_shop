@@ -13,6 +13,15 @@ class Product extends Model
 {
     use HasFactory;
 
+    const PRODUCT_SIZES = [
+        'S',
+        'M',
+        'L',
+        'XS',
+        'XL',
+        'XXL'
+    ];
+
     const PRODUCT_COLORS = [
         'Red',
         'Blue',
