@@ -2,7 +2,7 @@
 
 namespace App\Services;
 
-use App\Filters\ProductFilter;
+use App\Filters\Filters\ProductFilter;
 use App\Models\Product;
 use Illuminate\Database\Eloquent\Collection;
 
@@ -11,13 +11,22 @@ class ProductService
     public function get(array $requestData): Collection
     {
         if (isset($requestData['filters'])) {
+
             $filter = new ProductFilter();
-            $response = $filter->handle($requestData['filters'], Product::query())->get();
+            $query = $filter->handle($requestData['filters'], Product::query());
+
         } else {
-            $response = Product::withCount('orders')->get();
+            $query = Product::withCount('orders');
         }
 
-        return $response;
+        return $query->get();
+    }
+
+    public function top($count): Collection
+    {
+        return Product::withCount('orders')
+            ->orderBy('orders_count', 'desc')
+            ->limit($count)->get();
     }
 
     public function post(array $requestData): Product

@@ -57,6 +57,7 @@ Route::prefix('/products')
     ->group(function () {
         Route::get('/',  'index');
         Route::get('/{product}', 'show');
+        Route::get('/top/{count}', 'top');
 
         Route::middleware('auth:api')->group(function () {
             Route::post('/', 'store')

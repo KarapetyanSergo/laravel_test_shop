@@ -37,6 +37,11 @@ class ProductController extends Controller
         ]);
     }
 
+    public function top(int $count, ProductService $service): JsonResponse
+    {
+        return response()->json($service->top($count));
+    }
+
     public function destroy(Product $product, ProductService $service): JsonResponse
     {
         $service->delete($product);
