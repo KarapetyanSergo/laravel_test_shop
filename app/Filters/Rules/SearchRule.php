@@ -23,4 +23,5 @@ class SearchRule implements FilterRule
             }
         });
     }
+    //asd
 }
