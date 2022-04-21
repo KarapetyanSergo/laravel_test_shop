@@ -11,7 +11,6 @@ class ProductService
     public function get(array $requestData): Collection
     {
         if (isset($requestData['filters'])) {
-
             $filter = new ProductFilter();
             $query = $filter->handle($requestData['filters'], Product::query());
 

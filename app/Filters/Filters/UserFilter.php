@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Filters;
+namespace App\Filters\Filters;
 
+use App\Filters\Filter;
 use App\Filters\Rules\SearchRule;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;

@@ -2,7 +2,7 @@
 
 namespace App\Services;
 
-use App\Filters\UserFilter;
+use App\Filters\Filters\UserFilter;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Collection;
 
@@ -14,7 +14,6 @@ class UserService
         $filtersData = $requestData['filters'] ?? [];
 
         return $filter->handle($filtersData, User::query())
-            ->where('type', '=', 'merchant')
             ->get();
     }
 }

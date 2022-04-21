@@ -20,7 +20,7 @@ use Illuminate\Support\Arr;
 class ProductController extends Controller
 {
     public function index(Request $request,  ProductService $service): JsonResponse
-    {
+    {}
         return response()->json($service->get($request->all()));
     }
 

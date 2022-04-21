@@ -17,16 +17,10 @@ class SearchRule implements FilterRule
 
     public function filter(Builder $query, $value): Builder
     {
-
-        foreach ($this->columns as $index => $column) {
-            if ($index == 0) {
-                $query = $query->where($column, 'like', '%'.$value.'%');
-                continue;
+         return $query->where(function($query) use ($value) {
+            foreach ($this->columns as $index => $column) {
+                $query = $query->orWhere($column, 'like', '%'.$value.'%'); 
             }
-
-            $query = $query->orWhere($column, 'like', '%'.$value.'%');
-        }
-
-        return $query;
+        });
     }
 }
