@@ -5,53 +5,24 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Http\Requests\Auth\RegisterRequest;
-use App\Models\User;
+use App\Services\AuthService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Validation\ValidationException;
 
 class AuthController extends Controller
 {
-    public function register(RegisterRequest $request): JsonResponse
+    public function register(RegisterRequest $request, AuthService $authService): JsonResponse
     {
-        User::create([
-            'name'  =>  $request->name,
-            'email' =>  $request->email,
-            'type' => $request->type,
-            'password' => Hash::make($request->password)
-        ]);
-
-        return response()->json([
-            'message' => 'You have successfully register!'
-        ]);
+        return response()->json($this->getDataResponse($authService->register($request->all())));
     }
 
-    public function login(LoginRequest $request): JsonResponse
+    public function login(LoginRequest $request, AuthService $authService): JsonResponse
     {
-        $user = User::where('email', $request->email)->first();
-
-        if (!$user || !Hash::check($request->password, $user->password)) {
-            throw ValidationException::withMessages([
-                'Incorrect email or password'
-            ]);
-        }
-
-        $token = $user->createToken('Token Name')->accessToken;
-
-        return response()->json([
-            'message' => 'You have successfully login!',
-            'token' => $token
-        ]);
+        return response()->json($this->getDataResponse($authService->login($request->all())));
     }
 
-    public function logOut(Request $request): JsonResponse
+    public function logOut(Request $request, AuthService $authService): JsonResponse
     {
-        $request->user()->token()->delete();
-
-        return response()->json([
-            'message' => 'You have successfully logout!'
-        ]);
+        return response()->json($this->getDataREsponse($authService->logOut($request)));
     }
 }

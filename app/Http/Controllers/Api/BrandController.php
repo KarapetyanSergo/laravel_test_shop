@@ -6,40 +6,33 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Brand\BrandStoreRequest;
 use App\Http\Requests\Brand\BrandStatusChangeRequest;
 use App\Models\Brand;
-use Illuminate\Database\Eloquent\Collection;
+use BrandService;
 use Illuminate\Http\JsonResponse;
 
 class BrandController extends Controller
 {
     public function index(): JsonResponse
     {
-        return response()->json(Brand::all());
+        return response()->json($this->getDataResponse(Brand::all()));
     }
 
     public function show(Brand $brand): JsonResponse
     {
-        return response()->json($brand);
+        return response()->json($this->getDataResponse($brand));
     }
 
-    public function store(BrandStoreRequest $request): JsonResponse
+    public function store(BrandService $brandService, BrandStoreRequest $request): JsonResponse
     {
-        $data = $request->validated();
-        $data['status'] = 'Not Confirmed';
-
-        return response()->json(Brand::create($data));
+        return response()->json($this->getDataResponse($brandService->create($request->validated())));
     }
 
-    public function destroy(Brand $brand): JsonResponse
+    public function destroy(BrandService $brandService, Brand $brand): JsonResponse
     {
-        $brand->delete();
-
-        return response()->json($brand);
+        return response()->json($this->getDataResponse($brandService->remove($brand)));
     }
 
-    public function updateStatus(BrandStatusChangeRequest $request, Brand $brand): JsonResponse
+    public function updateStatus(BrandService $brandService, BrandStatusChangeRequest $request, Brand $brand): JsonResponse
     {
-        $brand->update($request->validated());
-
-        return response()->json($brand);
+        return response()->json($this->getDataResponse($brandService->update($brand, $request->validated())));
     }
 }

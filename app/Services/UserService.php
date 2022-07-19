@@ -17,4 +17,13 @@ class UserService
             ->where('type', '=', 'merchant')
             ->get();
     }
+
+    public function delete(User $user): array
+    {
+        $user->delete();
+
+        return [
+            'message' => 'User delete success!'
+        ];
+    }
 }

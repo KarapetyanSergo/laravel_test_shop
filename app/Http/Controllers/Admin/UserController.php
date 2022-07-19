@@ -13,20 +13,16 @@ class UserController extends Controller
 {
     public function index(Request $request, UserService $service): JsonResponse
     {
-        return response()->json($service->get($request->all()));
+        return response()->json($this->getDataREsponse($service->get($request->all())));
     }
 
     public function show(User $user): JsonResponse
     {
-        return response()->json($user);
+        return response()->json($this->getDataResponse($user));
     }
 
-    public function destroy(User $user): JsonResponse
+    public function destroy(User $user, UserService $service): JsonResponse
     {
-        $user->delete();
-
-        return response()->json([
-            'message' => 'User delete success!'
-        ]);
+        return response()->json($this->getDataResponse($service->delete($user)));
     }
 }

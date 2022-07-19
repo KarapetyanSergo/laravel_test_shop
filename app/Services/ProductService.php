@@ -4,21 +4,13 @@ namespace App\Services;
 
 use App\Filters\ProductFilter;
 use App\Models\Product;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 
 class ProductService
 {
     public function get(array $requestData): Collection
     {
-        if (isset($requestData['filters'])) {
-            $filter = new ProductFilter();
-            $response = $filter->handle($requestData['filters'], Product::query())->get();
-        } else {
-            $response = Product::all();
-        }
-
-        return $response;
+        return (isset($requestData['filters'])) ? (new ProductFilter())->handle($requestData['filters'], Product::query())->get() : Product::all();
     }
 
     public function post(array $requestData): Product
@@ -26,10 +18,12 @@ class ProductService
         return Product::create($requestData);
     }
 
-    public function delete(Product $product): Product
+    public function delete(Product $product): array
     {
         $product->delete();
 
-        return $product;
+        return [
+            'Product deleted succesfully.'
+        ];
     }
 }

@@ -4,7 +4,6 @@ namespace App\Filters\Rules;
 
 use App\Filters\FilterRule;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Collection;
 
 class SearchRule implements FilterRule
 {

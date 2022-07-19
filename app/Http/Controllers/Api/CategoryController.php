@@ -4,33 +4,29 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Category\CategoryStoreRequest;
-use App\Models\Brand;
 use App\Models\Category;
-use App\Models\Product;
+use CategoryService;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Arr;
 
 class CategoryController extends Controller
 {
     public function index(): JsonResponse
     {
-        return response()->json(Category::whereDoesntHave('children')->get());
+        return response()->json($this->getDataResponse(Category::whereDoesntHave('children')->get()));
     }
 
     public function show(Category $category): JsonResponse
     {
-        return response()->json($category);
+        return response()->json($this->getDataResponse($category));
     }
 
-    public function store(CategoryStoreRequest $request): JsonResponse
+    public function store(CategoryStoreRequest $request, CategoryService $service): JsonResponse
     {
-        return response()->json(Category::create($request->validated()));
+        return response()->json($this->getDataResponse($service->create($request->validated())));
     }
 
-    public function destroy(Category $category): JsonResponse
+    public function destroy(Category $category, CategoryService $service): JsonResponse
     {
-        $category->delete();
-
-        return response()->json($category);
+        return response()->json($service->delete($category));
     }
 }

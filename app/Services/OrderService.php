@@ -15,7 +15,6 @@ class OrderService
     public function store(): bool
     {
         return DB::transaction(function () {
-
             $user = Auth::user();
             $carts = ProductUser::where('user_id', $user->id)->get();
 

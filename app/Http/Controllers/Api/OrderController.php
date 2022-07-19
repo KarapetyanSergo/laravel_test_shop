@@ -8,9 +8,8 @@ use Illuminate\Http\JsonResponse;
 
 class OrderController extends Controller
 {
-    public function create(): JsonResponse
+    public function create(OrderService $orderService): JsonResponse
     {
-        $orderService = new OrderService();
         $create = $orderService->store();
 
         if ($create) {
@@ -19,8 +18,6 @@ class OrderController extends Controller
             $message = 'No clearance products!';
         }
 
-        return response()->json([
-            'message' => $message
-        ]);
+        return response()->json($this->getDataResponse($message));
     }
 }
